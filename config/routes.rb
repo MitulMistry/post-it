@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :tags, only: [:index, :show, :create, :update, :destroy]
   resources :notes, only: [:index, :show, :create, :update, :destroy]
   # The priority is based upon order of creation: first created -> highest priority.

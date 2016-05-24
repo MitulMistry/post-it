@@ -30,7 +30,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 gem 'bootstrap-sass', '~> 3.1.1'
-#gem 'devise'
+gem 'devise'
 #gem 'kaminari'
 #gem 'airbrake'
 #gem 'faker'
