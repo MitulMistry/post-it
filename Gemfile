@@ -31,6 +31,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'devise'
+gem 'active_model_serializers'
 #gem 'kaminari'
 #gem 'airbrake'
 #gem 'faker'
