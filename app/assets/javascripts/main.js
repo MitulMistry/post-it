@@ -22,6 +22,7 @@ function attachListeners(){
       console.log(data);
       //var post = data["post"];
       //$("#tag_name").text(post["name"]);
+      loadTags();
     });
   });
 
@@ -37,6 +38,7 @@ function attachListeners(){
       console.log(data);
       //var post = data["post"];
       //$("#tag_name").text(post["name"]);
+      loadNotes();
     });
   });
 
@@ -47,5 +49,5 @@ function loadTags(){
 }
 
 function loadNotes(){
-  
+
 }
