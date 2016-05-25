@@ -8,7 +8,16 @@
 </head>
 <body>
 
-<%= yield %>
+  <%= render "layouts/header" %>
+  <div class="container-fluid">
+    <%= content_tag(:div, flash[:error], :id => "flash_error", class: "alert alert-danger", role: "alert") if flash[:error] %>
+    <%= content_tag(:div, flash[:notice], :id => "flash_notice", class: "alert alert-info", role: "alert") if flash[:notice] %>
+    <%= content_tag(:div, flash[:alert], :id => "flash_alert", class: "alert alert-warning", role: "alert") if flash[:alert] %>
 
+    <%= yield %>
+
+  </div>
+
+  <%= render "layouts/footer" %>
 </body>
 </html>
