@@ -1,1 +1,47 @@
-<h1>Home</h1>
+<div class="main-body">
+  <div class="container-fluid" style="margin-top: 30px;">
+    <div class="row no-pad">
+
+      <div class="col-md-2">
+        <h4>Tags</h4>
+        <div id="tags">
+
+        </div>
+
+        <%= form_for(@tag) do |f| %>
+        <div class="field">
+          <%= f.label "New tag:" %>
+          <%= f.text_field :name %>
+        </div>
+        <div class="actions">
+          <%= f.submit %>
+        </div>
+        <% end %>
+
+      </div>
+
+      <div class="col-md-10">
+        <div id="notes">
+
+        </div>
+
+        <%= form_for(@note) do |f| %>
+        <h3>New note:</h3>
+        <div class="field">
+          <%= f.label :title %>
+          <%= f.text_field :title %>
+        </div>
+        <div class="field">
+          <%= f.label :content %>
+          <%= f.text_field :content %>
+        </div>
+        <div class="actions">
+          <%= f.submit %>
+        </div>
+        <% end %>
+
+      </div>
+
+    </div>
+  </div>
+</div>
