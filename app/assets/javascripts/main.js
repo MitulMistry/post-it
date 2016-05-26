@@ -3,7 +3,7 @@
 $(document).ready(function(){
   attachListeners();
   loadTags();
-  loadNotes();
+  getAllNotes();
 });
 
 function attachListeners(){
@@ -38,7 +38,7 @@ function attachListeners(){
       console.log(data);
       //var post = data["post"];
       //$("#tag_name").text(post["name"]);
-      loadNotes();
+      getAllNotes();
     });
   });
 
@@ -49,32 +49,50 @@ function loadTags(){
     var tags = response;
 
     $('div#tags').html('');
-    //$('div#tags').append('<ul>');
 
     for(var i = 0; i < tags.length; i++){
       $('div#tags').append(generateTagLink(tags[i]));
     }
 
-    //$('div#tags').append('</ul>');
+    addTagListeners();
   });
 }
 
 function generateTagLink(tag){
   //return $('<li>', {'data-state': game.state, 'data-gameid': game.id, text: game.id});
-  return $('<li>', { text: tag.name });
+  //return $('<li>', { text: tag.name });
+  return $('<button>', {type: 'button', class: 'btn btn-primary tag-btn', 'data-id': tag.id, text: tag.name});//btn-block
 }
 
-function loadNotes(){
+function addTagListeners(){
+  $('button.tag-btn').each(function(index, item){
+
+    $(item).on('click', function(event){
+      getTagNotes($(item).data('id'));
+    });
+  });
+}
+
+function getAllNotes(){
   $.getJSON('/notes').success(function(response){
     var notes = response;
-    //console.log(notes);
-
-    $('div#notes').html('');
-
-    for(var i = 0; i < notes.length; i++){
-      $('div#notes').append(generateNote(notes[i]));
-    }
+    loadNotes(notes);
   });
+}
+
+function getTagNotes(tag_id){
+  $.getJSON('/tags/' + tag_id).success(function(response){
+    var notes = response;
+    loadNotes(notes);
+  });
+}
+
+function loadNotes(notes){
+  $('div#notes').html(''); //clear html
+
+  for(var i = 0; i < notes.length; i++){
+    $('div#notes').append(generateNote(notes[i]));
+  }
 }
 
 function generateNote(note){

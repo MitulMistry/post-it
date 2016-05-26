@@ -11,10 +11,11 @@ class TagsController < ApplicationController
    end
   end
 
-  def show
+  def show #returns all the notes that are under this tag
+    @tag_notes = @tag.notes if @tag.user == current_user #authorizes
     respond_to do |format|
      #format.html { render :show }
-     format.json { render json: @tag}
+     format.json { render json: @tag_notes}
    end
   end
 
