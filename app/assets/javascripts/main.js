@@ -45,7 +45,23 @@ function attachListeners(){
 }
 
 function loadTags(){
+  $.getJSON('/tags').success(function(response){
+    var tags = response;
 
+    $('div#tags').html('');
+    //$('div#tags').append('<ul>');
+
+    for(var i = 0; i < tags.length; i++){
+      $('div#tags').append(generateTagLink(tags[i]))
+    }
+
+    //$('div#tags').append('</ul>');
+  });
+}
+
+function generateTagLink(tag){
+  //return $('<li>', {'data-state': game.state, 'data-gameid': game.id, text: game.id});
+  return $('<li>', { text: tag.name });
 }
 
 function loadNotes(){
