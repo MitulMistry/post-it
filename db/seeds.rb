@@ -5,3 +5,29 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+5.times do
+  User.create(
+  email: Faker::Internet.email,
+  password: "password"
+  )
+end
+
+User.all.each do |user|
+  8.times do
+    user.notes.create(
+    title: Faker::Lorem.sentence,
+    content: Faker::Lorem.paragraph
+    )
+  end
+
+  3.times do
+    user.tags.create(
+    name: Faker::Lorem.word
+    )
+  end
+
+  user.notes.each do |note|
+    note.tags << user.tags.order("RANDOM()").first
+  end
+end

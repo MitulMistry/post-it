@@ -3,7 +3,7 @@ class TagsController < ApplicationController
 
   #uses ActiveModel Serializer to implicitly serialize tag (render json: @tag), in serializers/tag_serializer.rb
   def index
-    @tags = Tag.all #current_user.tags
+    @tags = current_user.tags
     #render json: @tags
     respond_to do |format|
      #format.html { render :index }
@@ -19,7 +19,7 @@ class TagsController < ApplicationController
   end
 
   def create
-    @tag = Tag.create(tag_params)
+    @tag = current_user.tags.create(tag_params)
     render json: @tag
   end
 

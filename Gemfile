@@ -34,7 +34,7 @@ gem 'devise'
 gem 'active_model_serializers'
 #gem 'kaminari'
 #gem 'airbrake'
-#gem 'faker'
+gem 'faker'
 #gem 'friendly_id'
 #gem 'omniauth-facebook'
 

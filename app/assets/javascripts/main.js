@@ -52,7 +52,7 @@ function loadTags(){
     //$('div#tags').append('<ul>');
 
     for(var i = 0; i < tags.length; i++){
-      $('div#tags').append(generateTagLink(tags[i]))
+      $('div#tags').append(generateTagLink(tags[i]));
     }
 
     //$('div#tags').append('</ul>');
@@ -65,5 +65,18 @@ function generateTagLink(tag){
 }
 
 function loadNotes(){
+  $.getJSON('/notes').success(function(response){
+    var notes = response;
+    //console.log(notes);
 
+    $('div#notes').html('');
+
+    for(var i = 0; i < notes.length; i++){
+      $('div#notes').append(generateNote(notes[i]));
+    }
+  });
+}
+
+function generateNote(note){
+  return '<div class="col-sm-6 col-md-3"><div class="thumbnail note"><div class="caption"><h3>' + note.title + '</h3><p>' + note.content + '</p></div></div></div>';
 }
