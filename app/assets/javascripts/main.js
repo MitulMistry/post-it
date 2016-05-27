@@ -22,6 +22,7 @@ function attachListeners(){
       console.log(data);
       //var post = data["post"];
       //$("#tag_name").text(post["name"]);
+      $('form #tag_name').val(''); //clear form input
       loadTags();
     });
   });
@@ -38,6 +39,8 @@ function attachListeners(){
       console.log(data);
       //var post = data["post"];
       //$("#tag_name").text(post["name"]);
+      $('form #note_title').val(''); //clear form input
+      $('form #note_content').val(''); //clear form input
       getAllNotes();
     });
   });
