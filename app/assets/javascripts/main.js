@@ -61,7 +61,7 @@ function loadTags(){
 function generateTagLink(tag){
   //return $('<li>', {'data-state': game.state, 'data-gameid': game.id, text: game.id});
   //return $('<li>', { text: tag.name });
-  return $('<button>', {type: 'button', class: 'btn btn-info tag-btn', 'data-id': tag.id, text: tag.name});//btn-block
+  return $('<button>', {type: 'button', class: 'btn btn-secondary btn-sm tag-btn', 'data-id': tag.id, text: tag.name});//btn-block
 }
 
 function addTagListeners(){
@@ -96,5 +96,6 @@ function loadNotes(notes){
 }
 
 function generateNote(note){
-  return '<div class="col-sm-6 col-md-3"><div class="thumbnail note"><div class="caption"><h3>' + note.title + '</h3><p>' + note.content + '</p></div></div></div>';
+  //return '<div class="col-sm-6 col-md-3"><div class="thumbnail note"><div class="caption"><h3>' + note.title + '</h3><p>' + note.content + '</p></div></div></div>';
+  return '<div class="col-sm-6 col-md-4"><div class="card card-block note"><h5 class="card-title">' + note.title + '</h5><p class="card-text">' + note.content + '</p><a href="#" class="card-link">Edit</a><a href="#" class="card-link">Delete</a></div></div>';
 }

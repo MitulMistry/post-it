@@ -29,7 +29,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'bootstrap-sass'
+#gem 'bootstrap-sass'
+gem 'bootstrap', '~> 4.0.0.alpha3' #bootstrap 4
+
 gem 'devise'
 gem 'active_model_serializers'
 #gem 'kaminari'

@@ -3,21 +3,24 @@
     <div class="row no-pad">
 
       <div class="col-md-2">
-        <h4>Tags</h4>
+        <h5>Tags:</h5>
         <div id="tags">
 
         </div>
 
+        </br>
         <%= form_for(@tag) do |f| %>
-        <fieldset class="form-group">
-        <div class="field">
-          <%= f.label "New tag:" %>
-          <%= f.text_field :name, class: "form-control" %>
-        </div>
-        <div class="actions">
-          <%= f.submit class: "btn btn-primary" %>
-        </div>
-        </fieldset>
+          <fieldset class="form-group">
+            <div class="field">
+              <%= f.label :name, text: "New tag:" %>
+              <%= f.text_field :name, class: "form-control" %>
+            </div>
+          </fieldset>
+          <fieldset class="form-group">
+            <div class="actions">
+              <%= f.submit class: "btn btn-primary btn-sm" %>
+            </div>
+          </fieldset>
         <% end %>
 
       </div>
@@ -28,20 +31,27 @@
         </div>
 
         <%= form_for(@note) do |f| %>
-        <h3>New note:</h3>
-        <div class="field">
-          <%= f.label :title %>
-          <%= f.text_field :title %>
-        </div>
-        <div class="field">
-          <%= f.label :content %>
-          <%= f.text_field :content %>
-        </div>
-        <div class="actions">
-          <%= f.submit %>
-        </div>
-        <% end %>
+          <h3>New note:</h3>
+          <fieldset class="form-group">            
+            <div class="field">
+              <%= f.label :title, class: "form-control" %>
+              <%= f.text_field :title, class: "form-control" %>
+            </div>
+          </fieldset>
 
+          <fieldset class="form-group">
+            <div class="field">
+              <%= f.label :content %>
+              <%= f.text_field :content %>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <div class="actions">
+              <%= f.submit class: "btn btn-primary btn-sm" %>
+            </div>
+          </fieldset>
+        <% end %>
       </div>
 
     </div>
