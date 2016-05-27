@@ -26,32 +26,34 @@
       </div>
 
       <div class="col-md-10">
-        <div id="notes">
+        <div class="card-columns" id="notes">
+
+          <div class="card card-block">
+            <%= form_for(@note) do |f| %>
+              <h4>New note:</h4>
+              <fieldset class="form-group">
+                <div class="field">
+                  <%= f.label :title %>
+                  <%= f.text_field :title, class: "form-control" %>
+                </div>
+              </fieldset>
+
+              <fieldset class="form-group">
+                <div class="field">
+                  <%= f.label :content %>
+                  <%= f.text_area :content, class: "form-control", rows: 5 %>
+                </div>
+              </fieldset>
+
+              <fieldset class="form-group">
+                <div class="actions">
+                  <%= f.submit class: "btn btn-primary btn-sm" %>
+                </div>
+              </fieldset>
+            <% end %>
+          </div>
 
         </div>
-
-        <%= form_for(@note) do |f| %>
-          <h3>New note:</h3>
-          <fieldset class="form-group">            
-            <div class="field">
-              <%= f.label :title, class: "form-control" %>
-              <%= f.text_field :title, class: "form-control" %>
-            </div>
-          </fieldset>
-
-          <fieldset class="form-group">
-            <div class="field">
-              <%= f.label :content %>
-              <%= f.text_field :content %>
-            </div>
-          </fieldset>
-
-          <fieldset class="form-group">
-            <div class="actions">
-              <%= f.submit class: "btn btn-primary btn-sm" %>
-            </div>
-          </fieldset>
-        <% end %>
       </div>
 
     </div>

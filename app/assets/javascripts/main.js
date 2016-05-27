@@ -88,7 +88,8 @@ function getTagNotes(tag_id){
 }
 
 function loadNotes(notes){
-  $('div#notes').html(''); //clear html
+  //$('div#notes').html(''); //clear html
+  $('div#notes .note').remove(); //remove all notes
 
   for(var i = 0; i < notes.length; i++){
     $('div#notes').append(generateNote(notes[i]));
@@ -97,5 +98,5 @@ function loadNotes(notes){
 
 function generateNote(note){
   //return '<div class="col-sm-6 col-md-3"><div class="thumbnail note"><div class="caption"><h3>' + note.title + '</h3><p>' + note.content + '</p></div></div></div>';
-  return '<div class="col-sm-6 col-md-4"><div class="card card-block note"><h5 class="card-title">' + note.title + '</h5><p class="card-text">' + note.content + '</p><a href="#" class="card-link">Edit</a><a href="#" class="card-link">Delete</a></div></div>';
+  return '<div class="card card-block note"><h5 class="card-title">' + note.title + '</h5><p class="card-text">' + note.content + '</p><a href="#" class="card-link">Edit</a><a href="#" class="card-link">Delete</a></div>';
 }
