@@ -9,13 +9,15 @@
         </div>
 
         <%= form_for(@tag) do |f| %>
+        <fieldset class="form-group">
         <div class="field">
           <%= f.label "New tag:" %>
-          <%= f.text_field :name %>
+          <%= f.text_field :name, class: "form-control" %>
         </div>
         <div class="actions">
-          <%= f.submit %>
+          <%= f.submit class: "btn btn-primary" %>
         </div>
+        </fieldset>
         <% end %>
 
       </div>

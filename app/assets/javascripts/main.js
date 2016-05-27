@@ -61,7 +61,7 @@ function loadTags(){
 function generateTagLink(tag){
   //return $('<li>', {'data-state': game.state, 'data-gameid': game.id, text: game.id});
   //return $('<li>', { text: tag.name });
-  return $('<button>', {type: 'button', class: 'btn btn-primary tag-btn', 'data-id': tag.id, text: tag.name});//btn-block
+  return $('<button>', {type: 'button', class: 'btn btn-info tag-btn', 'data-id': tag.id, text: tag.name});//btn-block
 }
 
 function addTagListeners(){
