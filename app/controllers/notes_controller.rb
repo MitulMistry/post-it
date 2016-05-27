@@ -1,5 +1,6 @@
 class NotesController < ApplicationController
   before_action :find_note, only: [:show, :update, :destroy]
+  before_action :authorize_ownership, only: [:update, :destroy] #:edit,
 
   #uses ActiveModel Serializer to implicitly serialize note (render json: @note), in serializers/note_serializer.rb
   def index
@@ -29,6 +30,7 @@ class NotesController < ApplicationController
 
   def destroy
     @note.destroy
+    redirect_to root_path
   end
 
   #--------------------
@@ -36,6 +38,12 @@ class NotesController < ApplicationController
 
   def find_note
     @note = Note.find(params[:id])
+  end
+
+  def authorize_ownership
+    if @note.user != current_user
+      redirect_to root_path, alert: 'You do not have required permissions.'
+    end
   end
 
   def note_params #strong params

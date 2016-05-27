@@ -1,5 +1,6 @@
 class TagsController < ApplicationController
   before_action :find_tag, only: [:show, :update, :destroy]
+  before_action :authorize_ownership, only: [:update, :destroy] #:edit,
 
   #uses ActiveModel Serializer to implicitly serialize tag (render json: @tag), in serializers/tag_serializer.rb
   def index
@@ -37,6 +38,12 @@ class TagsController < ApplicationController
 
   def find_tag
     @tag = Tag.find(params[:id])
+  end
+
+  def authorize_ownership
+    if @tag.user != current_user
+      redirect_to root_path, alert: 'You do not have required permissions.'
+    end
   end
 
   def tag_params #strong params

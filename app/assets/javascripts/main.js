@@ -72,6 +72,7 @@ function addTagListeners(){
 
     $(item).on('click', function(event){
       getTagNotes($(item).data('id'));
+      addViewAllButton();
     });
   });
 }
@@ -97,9 +98,40 @@ function loadNotes(notes){
   for(var i = 0; i < notes.length; i++){
     $('div#notes').append(generateNote(notes[i]));
   }
+  addNoteListeners();
 }
 
 function generateNote(note){
   //return '<div class="col-sm-6 col-md-3"><div class="thumbnail note"><div class="caption"><h3>' + note.title + '</h3><p>' + note.content + '</p></div></div></div>';
-  return '<div class="card card-block note"><h5 class="card-title">' + note.title + '</h5><p class="card-text">' + note.content + '</p><a href="#" class="card-link">Edit</a><a href="#" class="card-link">Delete</a></div>';
+  return '<div class="card card-block note"><h5 class="card-title">' + note.title + '</h5><p class="card-text">' + note.content + '</p><button type="button" class="btn btn-link">Edit</button><button type="button" class="btn btn-link delete-note" data-id=' + note.id + '>Delete</button></div>';
+}
+
+function addNoteListeners(){
+  $('button.delete-note').each(function(index, item){
+
+    $(item).on('click', function(event){
+      var id = $(item).data('id');
+      //getTagNotes($(item).data('id'));
+      //addViewAllButton();
+      $.ajax({
+        url: '/notes/' + id,
+        type: 'DELETE',
+        success: function(result) {
+          getAllNotes(); //actually need to find note and remove?
+        }
+      });
+
+    });
+  });
+}
+
+function addViewAllButton(){
+  if ( $('button#view-all').length < 1){ //check if button doesn't exist
+    $('div#tags').append('<button type="button" class="btn btn-info btn-sm" id="view-all">View All</button>');
+
+    $('button#view-all').on('click', function(event){
+      getAllNotes();
+      $(this).remove(); //get rid of button once clicked
+    });
+  }
 }
