@@ -7,38 +7,29 @@ $(document).ready(function(){
 });
 
 function attachListeners(){
-
-    //create new tag
-    //createTag();
+  //create new tag
   $('form#new_tag').submit(function(event) {
-    event.preventDefault(); //prevent form from submitting the default way
+    event.preventDefault(); //prevent form from submitting the default way and reloading page
 
     var values = $(this).serialize();
-    //console.log(values);
 
     var posting = $.post('/tags', values);
 
     posting.done(function(data) {
-      console.log(data);
-      //var post = data["post"];
-      //$("#tag_name").text(post["name"]);
       $('form #tag_name').val(''); //clear form input
       loadTags();
     });
   });
 
+  //create new note
   $('form#new_note').submit(function(event) {
-    event.preventDefault(); //prevent form from submitting the default way
+    event.preventDefault(); //prevent form from submitting the default way and reloading page
 
     var values = $(this).serialize();
-    //console.log(values);
 
     var posting = $.post('/notes', values);
 
     posting.done(function(data) {
-      console.log(data);
-      //var post = data["post"];
-      //$("#tag_name").text(post["name"]);
       $('form #note_title').val(''); //clear form input
       $('form #note_content').val(''); //clear form input
       getAllNotes();
@@ -51,7 +42,7 @@ function loadTags(){
   $.getJSON('/tags').success(function(response){
     var tags = response;
 
-    $('div#tags').html('');
+    $('div#tags').html(''); //clear tags
 
     for(var i = 0; i < tags.length; i++){
       $('div#tags').append(generateTagLink(tags[i]));
@@ -62,16 +53,14 @@ function loadTags(){
 }
 
 function generateTagLink(tag){
-  //return $('<li>', {'data-state': game.state, 'data-gameid': game.id, text: game.id});
-  //return $('<li>', { text: tag.name });
-  return $('<button>', {type: 'button', class: 'btn btn-secondary btn-sm tag-btn', 'data-id': tag.id, text: tag.name});//btn-block
+  return $('<button>', {type: 'button', class: 'btn btn-secondary btn-sm tag-btn', 'data-id': tag.id, text: tag.name}); //btn-block
 }
 
 function addTagListeners(){
   $('button.tag-btn').each(function(index, item){
 
     $(item).on('click', function(event){
-      getTagNotes($(item).data('id'));
+      getTagNotes($(item).data('id')); //get the data-id attribute
       addViewAllButton();
     });
   });
@@ -107,26 +96,26 @@ function generateNote(note){
 }
 
 function addNoteListeners(){
-  $('button.delete-note').each(function(index, item){
+  $('button.delete-note').each(function(index, item){ //array of all delete buttons
 
     $(item).on('click', function(event){
-      var id = $(item).data('id');
-      //getTagNotes($(item).data('id'));
-      //addViewAllButton();
-      $.ajax({
-        url: '/notes/' + id,
-        type: 'DELETE',
-        success: function(result) {
-          getAllNotes(); //actually need to find note and remove?
-        }
-      });
-
+      if (confirm('Are you sure?')) {
+        var id = $(item).data('id');
+        $.ajax({
+          url: '/notes/' + id,
+          type: 'DELETE',
+          success: function(result) {
+            getAllNotes(); //actually need to find note and remove?
+          }
+        });
+      }
     });
+
   });
 }
 
 function addViewAllButton(){
-  if ( $('button#view-all').length < 1){ //check if button doesn't exist
+  if ( $('button#view-all').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
     $('div#tags').append('<button type="button" class="btn btn-info btn-sm" id="view-all">View All</button>');
 
     $('button#view-all').on('click', function(event){

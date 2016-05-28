@@ -30,7 +30,7 @@ class NotesController < ApplicationController
 
   def destroy
     @note.destroy
-    redirect_to root_path
+    render nothing: true #don't render or redirect since this will be called via ajax
   end
 
   #--------------------

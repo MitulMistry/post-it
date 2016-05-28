@@ -31,6 +31,7 @@ class TagsController < ApplicationController
 
   def destroy
     @tag.destroy
+    render nothing: true
   end
 
   #--------------------
