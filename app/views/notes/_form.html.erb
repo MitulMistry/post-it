@@ -1,0 +1,28 @@
+<%= form_for(note) do |f| %>
+  <fieldset class="form-group">
+    <div class="field">
+      <%= f.label :title %>
+      <%= f.text_field :title, class: "form-control" %>
+    </div>
+  </fieldset>
+
+  <fieldset class="form-group">
+    <div class="field">
+      <%= f.label :content %>
+      <%= f.text_area :content, class: "form-control", rows: 5 %>
+    </div>
+  </fieldset>
+
+  <fieldset class="form-group">
+    <div class="field">
+      <%= f.label :tag_ids %>
+      <%= f.collection_check_boxes :tag_ids, user_tags, :id, :name %>
+    </div>
+  </fieldset>
+
+  <fieldset class="form-group">
+    <div class="actions">
+      <%= f.submit class: "btn btn-primary btn-sm" %>
+    </div>
+  </fieldset>
+<% end %>

@@ -1,10 +1,10 @@
 class NotesController < ApplicationController
-  before_action :find_note, only: [:show, :update, :destroy]
-  before_action :authorize_ownership, only: [:update, :destroy] #:edit,
+  before_action :find_note, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_ownership, only: [:edit, :update, :destroy]
 
   #uses ActiveModel Serializer to implicitly serialize note (render json: @note), in serializers/note_serializer.rb
   def index
-    @notes = current_user.notes
+    @notes = current_user.notes.order('created_at DESC')
     respond_to do |format|
      #format.html { render :index }
      format.json { render json: @notes}
@@ -23,9 +23,16 @@ class NotesController < ApplicationController
     render json: @note, status: 201
   end
 
+  def edit
+      @user_tags = current_user.tags.order("name ASC")
+  end
+
   def update
     @note.update(note_params)
-    render json: @note
+    respond_to do |format|
+     format.html { redirect_to(root_path) }
+     format.json { render json: @note}
+   end
   end
 
   def destroy
@@ -47,6 +54,6 @@ class NotesController < ApplicationController
   end
 
   def note_params #strong params
-    params.require(:note).permit(:title, :content)
+    params.require(:note).permit(:title, :content, tag_ids: [])
   end
 end

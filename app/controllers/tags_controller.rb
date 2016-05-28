@@ -1,10 +1,10 @@
 class TagsController < ApplicationController
   before_action :find_tag, only: [:show, :update, :destroy]
-  before_action :authorize_ownership, only: [:update, :destroy] #:edit,
+  before_action :authorize_ownership, only: [:show, :update, :destroy] #:edit,
 
   #uses ActiveModel Serializer to implicitly serialize tag (render json: @tag), in serializers/tag_serializer.rb
   def index
-    @tags = current_user.tags
+    @tags = current_user.tags.order("name ASC")
     #render json: @tags
     respond_to do |format|
      #format.html { render :index }
@@ -13,7 +13,7 @@ class TagsController < ApplicationController
   end
 
   def show #returns all the notes that are under this tag
-    @tag_notes = @tag.notes if @tag.user == current_user #authorizes
+    @tag_notes = @tag.notes.order('created_at DESC')
     respond_to do |format|
      #format.html { render :show }
      format.json { render json: @tag_notes}

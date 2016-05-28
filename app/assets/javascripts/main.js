@@ -1,5 +1,7 @@
 'use strict';
 
+var currentTagId = 0;
+
 $(document).ready(function(){
   attachListeners();
   loadTags();
@@ -60,8 +62,11 @@ function addTagListeners(){
   $('button.tag-btn').each(function(index, item){
 
     $(item).on('click', function(event){
-      getTagNotes($(item).data('id')); //get the data-id attribute
+      currentTagId = $(item).data('id'); //get the data-id attribute
+      getTagNotes(currentTagId);
       addViewAllButton();
+      addEditTagButton();
+      addDeleteTagButton();
     });
   });
 }
@@ -92,7 +97,7 @@ function loadNotes(notes){
 
 function generateNote(note){
   //return '<div class="col-sm-6 col-md-3"><div class="thumbnail note"><div class="caption"><h3>' + note.title + '</h3><p>' + note.content + '</p></div></div></div>';
-  return '<div class="card card-block note"><h5 class="card-title">' + note.title + '</h5><p class="card-text">' + note.content + '</p><button type="button" class="btn btn-link">Edit</button><button type="button" class="btn btn-link delete-note" data-id=' + note.id + '>Delete</button></div>';
+  return '<div class="card card-block note"><h5 class="card-title">' + note.title + '</h5><p class="card-text">' + note.content + '</p><a class="btn btn-link" href="/notes/' + note.id + '/edit">Edit</a><button type="button" class="btn btn-link delete-note" data-id=' + note.id + '>Delete</button></div>';
 }
 
 function addNoteListeners(){
@@ -116,11 +121,48 @@ function addNoteListeners(){
 
 function addViewAllButton(){
   if ( $('button#view-all').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
-    $('div#tags').append('<button type="button" class="btn btn-info btn-sm" id="view-all">View All</button>');
+    $('div#tags').append('<button type="button" class="btn btn-info btn-sm tag-mod-btn" id="view-all">View All</button>');
 
     $('button#view-all').on('click', function(event){
       getAllNotes();
-      $(this).remove(); //get rid of button once clicked
+      removeTagButtons();
     });
   }
+}
+
+function addEditTagButton(){
+  if ( $('button#edit-tag').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
+    $('div#tags').append('<button type="button" class="btn btn-secondary-outline btn-sm tag-mod-btn" id="edit-tag">Edit Tag</button>');
+
+    $('button#edit-tag').on('click', function(event){
+      //?
+    });
+  }
+}
+
+function addDeleteTagButton(){
+  if ( $('button#delete-tag').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
+    $('div#tags').append('<button type="button" class="btn btn-secondary-outline btn-sm tag-mod-btn" id="delete-tag">Delete Tag</button>');
+
+    $('button#delete-tag').on('click', function(event){
+      if (confirm('Are you sure?')){
+        $.ajax({
+          url: '/tags/' + currentTagId,
+          type: 'DELETE',
+          success: function(result) {
+            getAllNotes();
+            loadTags();
+            removeTagButtons();
+          }
+        });
+      }
+    });
+  }
+}
+
+function removeTagButtons(){
+  currentTagId = 0; //set currently selected tag to none
+  $('button#view-all').remove();
+  $('button#edit-tag').remove();
+  $('button#delete-tag').remove();
 }
