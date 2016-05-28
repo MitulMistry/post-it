@@ -31,7 +31,7 @@ class TagsController < ApplicationController
 
   def destroy
     @tag.destroy
-    render nothing: true
+    render nothing: true #don't render or redirect since this will be called via ajax
   end
 
   #--------------------

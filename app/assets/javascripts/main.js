@@ -58,6 +58,11 @@ function generateTagLink(tag){
   return $('<button>', {type: 'button', class: 'btn btn-secondary btn-sm tag-btn', 'data-id': tag.id, text: tag.name}); //btn-block
 }
 
+function generateTagLabel(tag){
+  //return $('<span>', {class: 'label label-pill label-default', 'data-id': tag.id, text: tag.name});
+  return '<span class="label label-warning tag-label" data-id=' + tag.id + '>' + tag.name + '</span>';
+}
+
 function addTagListeners(){
   $('button.tag-btn').each(function(index, item){
 
@@ -97,7 +102,15 @@ function loadNotes(notes){
 
 function generateNote(note){
   //return '<div class="col-sm-6 col-md-3"><div class="thumbnail note"><div class="caption"><h3>' + note.title + '</h3><p>' + note.content + '</p></div></div></div>';
-  return '<div class="card card-block note"><h5 class="card-title">' + note.title + '</h5><p class="card-text">' + note.content + '</p><a class="btn btn-link" href="/notes/' + note.id + '/edit">Edit</a><button type="button" class="btn btn-link delete-note" data-id=' + note.id + '>Delete</button></div>';
+  var html = '<div class="card card-block note"><h5 class="card-title">' + note.title + '</h5><p class="card-text">' + note.content + '</p><p>';
+
+  note.tags.forEach(function(tag){
+    html += generateTagLabel(tag);
+  });
+
+  html += '</p><a class="btn btn-link" href="/notes/' + note.id + '/edit">Edit</a><button type="button" class="btn btn-link delete-note" data-id=' + note.id + '>Delete</button></div>';
+
+  return html;
 }
 
 function addNoteListeners(){

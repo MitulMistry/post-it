@@ -7,7 +7,7 @@ class NotesController < ApplicationController
     @notes = current_user.notes.order('created_at DESC')
     respond_to do |format|
      #format.html { render :index }
-     format.json { render json: @notes}
+     format.json { render json: @notes }
    end
   end
 
