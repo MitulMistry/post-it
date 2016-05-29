@@ -1,6 +1,6 @@
 var TAG_NAME_LENGTH = 30,
-NOTE_TITLE_LENGTH = 100,
-NOTE_CONTENT_LENGTH = 1000;
+NOTE_TITLE_LENGTH = 120,
+NOTE_CONTENT_LENGTH = 1200;
 
 function Validator(){ //validator class
 
