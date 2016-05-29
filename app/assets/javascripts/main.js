@@ -65,14 +65,23 @@ function generateTagLabel(tag){
 
 function addTagListeners(){
   $('button.tag-btn').each(function(index, item){
+    attachTagListeners(item);
+  });
+}
 
-    $(item).on('click', function(event){
-      currentTagId = $(item).data('id'); //get the data-id attribute
-      getTagNotes(currentTagId);
-      addViewAllButton();
-      addEditTagButton();
-      addDeleteTagButton();
-    });
+function addTagLabelListeners(){
+  $('.tag-label').each(function(index, item){ //array of all tag labels
+    attachTagListeners(item);
+  });
+}
+
+function attachTagListeners(item){
+  $(item).on('click', function(event){
+    currentTagId = $(item).data('id'); //get the data-id attribute
+    getTagNotes(currentTagId);
+    addViewAllButton();
+    addEditTagButton();
+    addDeleteTagButton();
   });
 }
 
@@ -130,6 +139,7 @@ function addNoteListeners(){
     });
 
   });
+  addTagLabelListeners();
 }
 
 function addViewAllButton(){
