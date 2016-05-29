@@ -15,4 +15,6 @@
 //= require turbolinks
 //= require tether
 //= require bootstrap
-//= require_tree .
+//= require formatter
+//= require validator
+//= require main

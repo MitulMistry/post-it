@@ -3,6 +3,7 @@
 var currentTagId = 0;
 
 var formatter = new Formatter(); //create formatter instance
+var validator = new Validator(); //create validator instance
 
 $(document).ready(function(){
   attachListeners();
@@ -15,29 +16,36 @@ function attachListeners(){
   $('form#new_tag').submit(function(event) {
     event.preventDefault(); //prevent form from submitting the default way and reloading page
 
-    var values = $(this).serialize();
+    var name = $('#tag_name').val();
 
-    var posting = $.post('/tags', values);
+    if (validator.validateTag(name)) {
+      var values = $(this).serialize();
+      var posting = $.post('/tags', values);
 
-    posting.done(function(data) {
-      $('form #tag_name').val(''); //clear form input
-      loadTags();
-    });
+      posting.done(function(data) {
+        $('form #tag_name').val(''); //clear form input
+        loadTags();
+      });
+    }
   });
 
   //create new note
   $('form#new_note').submit(function(event) {
     event.preventDefault(); //prevent form from submitting the default way and reloading page
 
-    var values = $(this).serialize();
+    var title = $('#note_title').val();
+    var content = $('#note_content').val();
 
-    var posting = $.post('/notes', values);
+    if (validator.validateNote(title, content)) {
+      var values = $(this).serialize();
+      var posting = $.post('/notes', values);
 
-    posting.done(function(data) {
-      $('form #note_title').val(''); //clear form input
-      $('form #note_content').val(''); //clear form input
-      getAllNotes();
-    });
+      posting.done(function(data) {
+        $('form #note_title').val(''); //clear form input
+        $('form #note_content').val(''); //clear form input
+        getAllNotes();
+      });
+    }
   });
 
 }
