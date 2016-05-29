@@ -143,7 +143,11 @@ function addNoteListeners(){
           url: '/notes/' + id,
           type: 'DELETE',
           success: function(result) {
-            getAllNotes(); //actually need to find note and remove?
+            if (currentTagId === 0){ //check if there is no currently selected tag
+              getAllNotes(); //then load all notes
+            } else {
+              getTagNotes(currentTagId); //otherwise load notes based on currently selected tag
+            }
           }
         });
       }
