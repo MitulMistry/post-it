@@ -3,7 +3,7 @@ function Formatter(){ //formatter class
 }
 
 Formatter.prototype.readableDate = function(dateTime){ //dateTime = 2016-05-26T16:24:19.457Z
-  var date = dateTime.slice(0, 9).split('-'); //get first 10 characters, split into array based on dashes
+  var date = dateTime.slice(0, 10).split('-'); //get first 10 characters, split into array based on dashes
   return date[1] + '/' + date[2] + '/' + date[0] //reorder with slashes - 05/26/2016
 };
 
