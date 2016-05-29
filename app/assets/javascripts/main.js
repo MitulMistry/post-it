@@ -2,6 +2,8 @@
 
 var currentTagId = 0;
 
+var formatter = new Formatter(); //create formatter instance
+
 $(document).ready(function(){
   attachListeners();
   loadTags();
@@ -111,13 +113,14 @@ function loadNotes(notes){
 
 function generateNote(note){
   //return '<div class="col-sm-6 col-md-3"><div class="thumbnail note"><div class="caption"><h3>' + note.title + '</h3><p>' + note.content + '</p></div></div></div>';
-  var html = '<div class="card card-block note"><h5 class="card-title">' + note.title + '</h5><p class="card-text">' + note.content + '</p><p>';
+  var html = '<div class="card card-block note"><h5 class="card-title">' + formatter.titleCase(note.title) + '</h5><p class="card-text">' + note.content + '</p><p>';
 
   note.tags.forEach(function(tag){
     html += generateTagLabel(tag);
   });
 
-  html += '</p><a class="btn btn-link" href="/notes/' + note.id + '/edit">Edit</a><button type="button" class="btn btn-link delete-note" data-id=' + note.id + '>Delete</button></div>';
+  html += '</p><p class="date">' + formatter.readableDate(note.created_at) + '</p>';
+  html += '<a class="btn btn-link" href="/notes/' + note.id + '/edit">Edit</a><button type="button" class="btn btn-link delete-note" data-id=' + note.id + '>Delete</button></div>';
 
   return html;
 }
