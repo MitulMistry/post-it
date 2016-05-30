@@ -1,6 +1,11 @@
 'use strict';
 
-var currentTagId = 0;
+var currentTagId = 0,
+totalNotes,
+currentPage = 0,
+totalPages;
+
+var NOTES_PER_PAGE = 10;
 
 var formatter = new Formatter(); //create formatter instance
 var validator = new Validator(); //create validator instance
@@ -97,15 +102,17 @@ function attachTagListeners(item){
 
 function getAllNotes(){
   $.getJSON('/notes').success(function(response){
-    var notes = response;
-    loadNotes(notes);
+    totalNotes = response;
+    totalPages = Math.ceil(totalNotes.length / NOTES_PER_PAGE); //calculates total number of pages needed, rounds up
+    paginateNotes();
   });
 }
 
 function getTagNotes(tag_id){
   $.getJSON('/tags/' + tag_id).success(function(response){
-    var notes = response;
-    loadNotes(notes);
+    totalNotes = response;
+    totalPages = Math.ceil(totalNotes.length / NOTES_PER_PAGE); //calculates total number of pages needed, rounds up
+    paginateNotes();
   });
 }
 
@@ -117,6 +124,51 @@ function loadNotes(notes){
     $('div#notes').append(generateNote(notes[i]));
   }
   addNoteListeners();
+}
+
+function paginateNotes(){
+  if (totalNotes.length <= NOTES_PER_PAGE){
+    loadNotes(totalNotes);
+    removePaginateButtons();
+  } else {
+    var notes = totalNotes.slice(currentPage * NOTES_PER_PAGE, (currentPage + 1) * NOTES_PER_PAGE); //selects the range of notes to display based on current page
+    loadNotes(notes);
+    addPaginateButtons();
+  }
+}
+
+function addPaginateButtons(){
+  if ( $('button#page-previous').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
+    $('div#paginate').append('<button type="button" class="btn btn-primary btn-sm tag-mod-btn" id="page-previous">Previous</button>');
+
+    $('button#page-previous').on('click', function(event){
+      currentPage--;
+      paginateNotes();
+    });
+  }
+
+  if ( $('button#page-next').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
+    $('div#paginate').append('<button type="button" class="btn btn-primary btn-sm tag-mod-btn" id="page-next">Next</button>');
+
+    $('button#page-next').on('click', function(event){
+      currentPage++;
+      paginateNotes();
+    });
+  }
+}
+
+function removePaginateButtons(){
+  currentPage = 0;
+  $('button#page-previous').remove();
+  $('button#page-next').remove();
+}
+
+function removePreviousPageButton(){
+  $('button#page-previous').remove();
+}
+
+function removeNextPageButton(){
+  $('button#page-next').remove();
 }
 
 function generateNote(note){

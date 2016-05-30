@@ -14,7 +14,8 @@
 end
 
 User.all.each do |user|
-  8.times do
+  num = Faker::Number.between(35, 100)
+  num.times do
     user.notes.create(
     title: Faker::Lorem.sentence,
     content: Faker::Lorem.paragraph
