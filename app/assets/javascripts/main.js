@@ -138,20 +138,26 @@ function paginateNotes(){
 }
 
 function addPaginateButtons(){
-  if ( $('button#page-previous').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
-    $('div#paginate').append('<button type="button" class="btn btn-primary btn-sm tag-mod-btn" id="page-previous">Previous</button>');
+  if (currentPage !== 0 && $('button#page-previous').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
+    $('div#paginate-previous').append('<button type="button" class="btn btn-primary btn-sm tag-mod-btn" id="page-previous">Previous</button>');
 
     $('button#page-previous').on('click', function(event){
       currentPage--;
+      if (currentPage === 0) {
+        removePreviousPageButton();
+      }
       paginateNotes();
     });
   }
 
-  if ( $('button#page-next').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
-    $('div#paginate').append('<button type="button" class="btn btn-primary btn-sm tag-mod-btn" id="page-next">Next</button>');
+  if (totalPages > 1 && currentPage !== (totalPages - 1) && $('button#page-next').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
+    $('div#paginate-next').append('<button type="button" class="btn btn-primary btn-sm tag-mod-btn" id="page-next">Next</button>');
 
     $('button#page-next').on('click', function(event){
       currentPage++;
+      if (currentPage === (totalPages - 1)) {
+        removeNextPageButton();
+      }
       paginateNotes();
     });
   }
