@@ -43,6 +43,7 @@ gem 'active_model_serializers'
 gem 'faker'
 #gem 'friendly_id'
 #gem 'omniauth-facebook'
+gem 'jquery-turbolinks' #fix issues with javascript executing through turbolinks
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record

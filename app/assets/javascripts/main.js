@@ -5,7 +5,7 @@ var currentTagId = 0;
 var formatter = new Formatter(); //create formatter instance
 var validator = new Validator(); //create validator instance
 
-$(document).ready(function(){
+$(document).ready(function(){ //doesn't trigger using turbolinks - fixed by using jquery-turbolinks gem
   attachListeners();
   loadTags();
   getAllNotes();
