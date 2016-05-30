@@ -1,6 +1,6 @@
 class NotesController < ApplicationController
   before_action :find_note, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_ownership, only: [:edit, :update, :destroy]
+  before_action :authorize_ownership, only: [:show, :edit, :update, :destroy]
 
   #uses ActiveModel Serializer to implicitly serialize note (render json: @note), in serializers/note_serializer.rb
   def index
@@ -13,8 +13,8 @@ class NotesController < ApplicationController
 
   def show
     respond_to do |format|
-     #format.html { render :show }
-     format.json { render json: @note}
+     format.html { render :show }
+     format.json { render json: @note }
    end
   end
 
@@ -31,13 +31,19 @@ class NotesController < ApplicationController
     @note.update(note_params)
     respond_to do |format|
      format.html { redirect_to(root_path) }
-     format.json { render json: @note}
+     format.json { render json: @note }
    end
   end
 
   def destroy
     @note.destroy
     render nothing: true #don't render or redirect since this will be called via ajax
+    #respond_to do |format|
+     #format.html { redirect_to(root_path) }
+     #format.json { render nothing: true }
+   #end
+
+   #render nothing: true #don't render or redirect since this will be called via ajax
   end
 
   #--------------------

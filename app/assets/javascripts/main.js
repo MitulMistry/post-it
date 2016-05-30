@@ -121,7 +121,7 @@ function loadNotes(notes){
 
 function generateNote(note){
   //return '<div class="col-sm-6 col-md-3"><div class="thumbnail note"><div class="caption"><h3>' + note.title + '</h3><p>' + note.content + '</p></div></div></div>';
-  var html = '<div class="card card-block note"><h5 class="card-title">' + formatter.titleCase(note.title) + '</h5><p class="card-text">' + note.content + '</p><p>';
+  var html = '<div class="card card-block note"><h5 class="card-title"><a href="/notes/' + note.id + '">' + formatter.titleCase(note.title) + '</a></h5><p class="card-text">' + note.content + '</p><p>';
 
   note.tags.forEach(function(tag){
     html += generateTagLabel(tag);
