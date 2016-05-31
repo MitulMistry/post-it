@@ -97,6 +97,7 @@ function attachTagListeners(item){
     addViewAllButton();
     addEditTagButton();
     addDeleteTagButton();
+    removeEditTagForm();
   });
 }
 
@@ -221,6 +222,7 @@ function addViewAllButton(){
 
     $('button#view-all').on('click', function(event){
       getAllNotes();
+      removeEditTagForm();
       removeTagButtons();
     });
   }
@@ -231,9 +233,55 @@ function addEditTagButton(){
     $('div#tags').append('<button type="button" class="btn btn-secondary-outline btn-sm tag-mod-btn" id="edit-tag">Edit Tag</button>');
 
     $('button#edit-tag').on('click', function(event){
-      //?
+      if ( $('form#edit-tag-form').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
+        $('div#tag-edit-div').append('<form id="edit-tag-form"></br><fieldset class="form-group"><div class="field"><input type="text" name="tag[name]" class="form-control" id="edit-tag-text-input" placeholder="Edit tag name"></div></fieldset><fieldset class="form-group"><div class="field"><button type="submit" class="btn btn-primary btn-sm">Submit</button></div></fieldset></form>');
+      }
     });
+
+    $(document).on('submit','form#edit-tag-form',function(event){ //use this for dynamic content
+      event.preventDefault(); //prevent form from submitting the default way and reloading page
+      var tagName = $('#edit-tag-text-input').val();
+      alert(tagName);
+
+      if (validator.validateTag(tagName)) {
+        $.ajax({
+          url: '/tags/' + currentTagId,
+          type: 'PATCH',
+          data: values,
+          success: function(result) {
+            removeEditTagForm();
+            loadTags();
+          }
+        });
+      }
+
+    });
+
+/*
+    $('form#edit-tag-form').submit(function(event) {
+      event.preventDefault(); //prevent form from submitting the default way and reloading page
+      var tagName = $('#edit-tag-text-input').val();
+      alert(tagName);
+
+      if (validator.validateTag(tagName)) {
+        $.ajax({
+          url: '/tags/' + currentTagId,
+          type: 'PATCH',
+          data: values,
+          success: function(result) {
+            removeEditTagForm();
+            loadTags();
+          }
+        });
+      }
+
+    });
+*/
   }
+}
+
+function removeEditTagForm(){
+  $('form#edit-tag-form').remove();
 }
 
 function addDeleteTagButton(){
@@ -242,6 +290,8 @@ function addDeleteTagButton(){
 
     $('button#delete-tag').on('click', function(event){
       if (confirm('Are you sure?')){
+        removeEditTagForm();
+
         $.ajax({
           url: '/tags/' + currentTagId,
           type: 'DELETE',

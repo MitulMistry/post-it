@@ -27,6 +27,7 @@ class TagsController < ApplicationController
 
   def update
     @tag.update(tag_params)
+    render nothing: true #don't render or redirect since this will be called via ajax
   end
 
   def destroy
