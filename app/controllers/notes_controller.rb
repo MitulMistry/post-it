@@ -20,7 +20,7 @@ class NotesController < ApplicationController
 
   def create
     @note = current_user.notes.create(note_params)
-    render json: @note, status: 201
+    render json: @note
   end
 
   def edit
@@ -37,13 +37,18 @@ class NotesController < ApplicationController
 
   def destroy
     @note.destroy
-    render nothing: true #don't render or redirect since this will be called via ajax
-    #respond_to do |format|
-     #format.html { redirect_to(root_path) }
-     #format.json { render nothing: true }
-   #end
+    #render nothing: true #don't render or redirect since this will be called via ajax
 
-   #render nothing: true #don't render or redirect since this will be called via ajax
+    #respond_to do |format|
+      #format.html { redirect_to(root_path) }
+      #format.json { render nothing: true }
+    #end
+
+    if request.xhr? #checks if ajax request - checks header
+      render nothing: true #don't redirect or render anything
+    else
+      redirect_to(root_path) #else if initiating from note show page, redirect to home
+    end
   end
 
   #--------------------
