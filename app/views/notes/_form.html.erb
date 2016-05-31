@@ -15,8 +15,12 @@
 
   <fieldset class="form-group">
     <div class="field">
-      <%= f.label :tag_ids %>
-      <%= f.collection_check_boxes :tag_ids, user_tags, :id, :name %>
+      <%= f.label :tag_ids, "Tags:" %>
+      <%= f.collection_check_boxes(:tag_ids, user_tags, :id, :name) do |b| %>
+        <%= b.label(class: "c-input c-checkbox") do %>
+          <%= b.check_box(class: "check_box") %><span class="c-indicator"></span><%= b.object.name %>
+        <% end %>
+      <% end %>
     </div>
   </fieldset>
 
