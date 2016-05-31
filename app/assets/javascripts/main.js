@@ -109,8 +109,8 @@ function getAllNotes(){
   });
 }
 
-function getTagNotes(tag_id){
-  $.getJSON('/tags/' + tag_id).success(function(response){
+function getTagNotes(tagId){
+  $.getJSON('/tags/' + tagId).success(function(response){
     totalNotes = response;
     totalPages = Math.ceil(totalNotes.length / NOTES_PER_PAGE); //calculates total number of pages needed, rounds up
     paginateNotes();
@@ -218,7 +218,7 @@ function addNoteListeners(){
 
 function addViewAllButton(){
   if ( $('button#view-all').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
-    $('div#tags').append('<button type="button" class="btn btn-info btn-sm tag-mod-btn" id="view-all">View All</button>');
+    $('div#tag-buttons').append('<button type="button" class="btn btn-info btn-sm tag-mod-btn" id="view-all">View All</button>');
 
     $('button#view-all').on('click', function(event){
       getAllNotes();
@@ -230,7 +230,7 @@ function addViewAllButton(){
 
 function addEditTagButton(){
   if ( $('button#edit-tag').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
-    $('div#tags').append('<button type="button" class="btn btn-secondary-outline btn-sm tag-mod-btn" id="edit-tag">Edit Tag</button>');
+    $('div#tag-buttons').append('<button type="button" class="btn btn-secondary-outline btn-sm tag-mod-btn" id="edit-tag">Edit Tag</button>');
 
     $('button#edit-tag').on('click', function(event){
       if ( $('form#edit-tag-form').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
@@ -241,9 +241,10 @@ function addEditTagButton(){
     $(document).on('submit','form#edit-tag-form',function(event){ //use this for dynamic content
       event.preventDefault(); //prevent form from submitting the default way and reloading page
       var tagName = $('#edit-tag-text-input').val();
-      alert(tagName);
 
       if (validator.validateTag(tagName)) {
+        var values = $(this).serialize();
+
         $.ajax({
           url: '/tags/' + currentTagId,
           type: 'PATCH',
@@ -251,32 +252,12 @@ function addEditTagButton(){
           success: function(result) {
             removeEditTagForm();
             loadTags();
+            getTagNotes(currentTagId);
           }
         });
       }
 
     });
-
-/*
-    $('form#edit-tag-form').submit(function(event) {
-      event.preventDefault(); //prevent form from submitting the default way and reloading page
-      var tagName = $('#edit-tag-text-input').val();
-      alert(tagName);
-
-      if (validator.validateTag(tagName)) {
-        $.ajax({
-          url: '/tags/' + currentTagId,
-          type: 'PATCH',
-          data: values,
-          success: function(result) {
-            removeEditTagForm();
-            loadTags();
-          }
-        });
-      }
-
-    });
-*/
   }
 }
 
@@ -286,7 +267,7 @@ function removeEditTagForm(){
 
 function addDeleteTagButton(){
   if ( $('button#delete-tag').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
-    $('div#tags').append('<button type="button" class="btn btn-secondary-outline btn-sm tag-mod-btn" id="delete-tag">Delete Tag</button>');
+    $('div#tag-buttons').append('<button type="button" class="btn btn-secondary-outline btn-sm tag-mod-btn" id="delete-tag">Delete Tag</button>');
 
     $('button#delete-tag').on('click', function(event){
       if (confirm('Are you sure?')){
