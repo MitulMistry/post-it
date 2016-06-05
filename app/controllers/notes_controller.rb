@@ -5,10 +5,7 @@ class NotesController < ApplicationController
   #uses ActiveModel Serializer to implicitly serialize note (render json: @note), in serializers/note_serializer.rb
   def index
     @notes = current_user.notes.order('created_at DESC')
-    respond_to do |format|
-     #format.html { render :index }
-     format.json { render json: @notes }
-   end
+    render json: @notes
   end
 
   def show
@@ -19,8 +16,12 @@ class NotesController < ApplicationController
   end
 
   def create
-    @note = current_user.notes.create(note_params)
-    render json: @note
+    @note = current_user.notes.build(note_params)
+    if @note.save
+      render json: @note
+    else
+      redirect_to root_path, alert: 'Note creation failed.'
+    end
   end
 
   def edit
@@ -28,21 +29,18 @@ class NotesController < ApplicationController
   end
 
   def update
-    @note.update(note_params)
-    respond_to do |format|
-     format.html { redirect_to(root_path) }
-     format.json { render json: @note }
+    if @note.update(note_params)
+      respond_to do |format|
+       format.html { redirect_to(root_path) }
+       format.json { render json: @note }
+     end
+   else
+     redirect_to root_path, alert: 'Note update failed.'
    end
   end
 
   def destroy
     @note.destroy
-    #render nothing: true #don't render or redirect since this will be called via ajax
-
-    #respond_to do |format|
-      #format.html { redirect_to(root_path) }
-      #format.json { render nothing: true }
-    #end
 
     if request.xhr? #checks if ajax request - checks header
       render nothing: true #don't redirect or render anything

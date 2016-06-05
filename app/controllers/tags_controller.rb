@@ -5,29 +5,30 @@ class TagsController < ApplicationController
   #uses ActiveModel Serializer to implicitly serialize tag (render json: @tag), in serializers/tag_serializer.rb
   def index
     @tags = current_user.tags.order("name ASC")
-    #render json: @tags
-    respond_to do |format|
-     #format.html { render :index }
-     format.json { render json: @tags}
-   end
+    render json: @tags
   end
 
   def show #returns all the notes that are under this tag
     @tag_notes = @tag.notes.order('created_at DESC')
-    respond_to do |format|
-     #format.html { render :show }
-     format.json { render json: @tag_notes}
-   end
+    render json: @tag_notes
   end
 
   def create
-    @tag = current_user.tags.create(tag_params)
-    render json: @tag
+    @tag = current_user.tags.build(tag_params)
+
+    if @tag.save
+      render json: @tag
+    else
+      redirect_to root_path, alert: 'Tag creation failed.'
+    end
   end
 
   def update
-    @tag.update(tag_params)
-    render nothing: true #don't render or redirect since this will be called via ajax
+    if @tag.update(tag_params)
+      render nothing: true #don't render or redirect since this will be called via ajax
+    else
+      redirect_to root_path, alert: 'Tag update failed.'
+    end
   end
 
   def destroy
