@@ -10,13 +10,18 @@ var NOTES_PER_PAGE = 10;
 var formatter = new Formatter(); //create formatter instance
 var validator = new Validator(); //create validator instance
 
-$(document).ready(function(){ //doesn't trigger using turbolinks - fixed by using jquery-turbolinks gem
+$(document).ready(function() { //doesn't trigger using turbolinks - fixed by using jquery-turbolinks gem
   attachListeners();
   loadTags();
   getAllNotes();
+  clearAlerts();
 });
 
-function attachListeners(){
+function clearAlerts() {
+  $('.alert').fadeOut(3000);
+}
+
+function attachListeners() {
   //create new tag
   $('form#new_tag').submit(function(event) {
     event.preventDefault(); //prevent form from submitting the default way and reloading page
@@ -55,13 +60,13 @@ function attachListeners(){
 
 }
 
-function loadTags(){
-  $.getJSON('/tags').success(function(response){
+function loadTags() {
+  $.getJSON('/tags').success(function(response) {
     var tags = response;
 
     $('div#tags').html(''); //clear tags
 
-    for(var i = 0; i < tags.length; i++){
+    for(var i = 0; i < tags.length; i++) {
       $('div#tags').append(generateTagLink(tags[i]));
     }
 
@@ -69,29 +74,29 @@ function loadTags(){
   });
 }
 
-function generateTagLink(tag){
+function generateTagLink(tag) {
   return $('<button>', {type: 'button', class: 'btn btn-secondary btn-sm tag-btn', 'data-id': tag.id, text: tag.name}); //btn-block
 }
 
-function generateTagLabel(tag){
+function generateTagLabel(tag) {
   //return $('<span>', {class: 'label label-pill label-default', 'data-id': tag.id, text: tag.name});
   return '<span class="label label-warning tag-label" data-id=' + tag.id + '>' + tag.name + '</span>';
 }
 
-function addTagListeners(){
-  $('button.tag-btn').each(function(index, item){
+function addTagListeners() {
+  $('button.tag-btn').each(function(index, item) {
     attachTagListeners(item);
   });
 }
 
-function addTagLabelListeners(){
-  $('.tag-label').each(function(index, item){ //array of all tag labels
+function addTagLabelListeners() {
+  $('.tag-label').each(function(index, item) { //array of all tag labels
     attachTagListeners(item);
   });
 }
 
-function attachTagListeners(item){
-  $(item).on('click', function(event){
+function attachTagListeners(item) {
+  $(item).on('click', function(event) {
     currentTagId = $(item).data('id'); //get the data-id attribute
     getTagNotes(currentTagId);
     addViewAllButton();
@@ -101,34 +106,34 @@ function attachTagListeners(item){
   });
 }
 
-function getAllNotes(){
-  $.getJSON('/notes').success(function(response){
+function getAllNotes() {
+  $.getJSON('/notes').success(function(response) {
     totalNotes = response;
     totalPages = Math.ceil(totalNotes.length / NOTES_PER_PAGE); //calculates total number of pages needed, rounds up
     paginateNotes();
   });
 }
 
-function getTagNotes(tagId){
-  $.getJSON('/tags/' + tagId).success(function(response){
+function getTagNotes(tagId) {
+  $.getJSON('/tags/' + tagId).success(function(response) {
     totalNotes = response;
     totalPages = Math.ceil(totalNotes.length / NOTES_PER_PAGE); //calculates total number of pages needed, rounds up
     paginateNotes();
   });
 }
 
-function loadNotes(notes){
+function loadNotes(notes) {
   //$('div#notes').html(''); //clear html
   $('div#notes .note').remove(); //remove all notes
 
-  for(var i = 0; i < notes.length; i++){
+  for(var i = 0; i < notes.length; i++) {
     $('div#notes').append(generateNote(notes[i]));
   }
   addNoteListeners();
 }
 
-function paginateNotes(){
-  if (totalNotes.length <= NOTES_PER_PAGE){
+function paginateNotes() {
+  if (totalNotes.length <= NOTES_PER_PAGE) {
     loadNotes(totalNotes);
     removePaginateButtons();
   } else {
@@ -138,11 +143,11 @@ function paginateNotes(){
   }
 }
 
-function addPaginateButtons(){
-  if (currentPage !== 0 && $('button#page-previous').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
+function addPaginateButtons() {
+  if (currentPage !== 0 && $('button#page-previous').length < 1) { //check if button doesn't exist - is array of buttons less than 1?
     $('div#paginate-previous').append('<button type="button" class="btn btn-primary btn-sm tag-mod-btn" id="page-previous">Previous</button>');
 
-    $('button#page-previous').on('click', function(event){
+    $('button#page-previous').on('click', function(event) {
       currentPage--;
       if (currentPage === 0) {
         removePreviousPageButton();
@@ -151,10 +156,10 @@ function addPaginateButtons(){
     });
   }
 
-  if (totalPages > 1 && currentPage !== (totalPages - 1) && $('button#page-next').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
+  if (totalPages > 1 && currentPage !== (totalPages - 1) && $('button#page-next').length < 1) { //check if button doesn't exist - is array of buttons less than 1?
     $('div#paginate-next').append('<button type="button" class="btn btn-primary btn-sm tag-mod-btn" id="page-next">Next</button>');
 
-    $('button#page-next').on('click', function(event){
+    $('button#page-next').on('click', function(event) {
       currentPage++;
       if (currentPage === (totalPages - 1)) {
         removeNextPageButton();
@@ -164,25 +169,25 @@ function addPaginateButtons(){
   }
 }
 
-function removePaginateButtons(){
+function removePaginateButtons() {
   currentPage = 0;
   $('button#page-previous').remove();
   $('button#page-next').remove();
 }
 
-function removePreviousPageButton(){
+function removePreviousPageButton() {
   $('button#page-previous').remove();
 }
 
-function removeNextPageButton(){
+function removeNextPageButton() {
   $('button#page-next').remove();
 }
 
-function generateNote(note){
+function generateNote(note) {
   //return '<div class="col-sm-6 col-md-3"><div class="thumbnail note"><div class="caption"><h3>' + note.title + '</h3><p>' + note.content + '</p></div></div></div>';
   var html = '<div class="card card-block note"><h5 class="card-title"><a href="/notes/' + note.id + '">' + formatter.titleCase(note.title) + '</a></h5><p class="card-text">' + note.content + '</p><p>';
 
-  note.tags.forEach(function(tag){
+  note.tags.forEach(function(tag) {
     html += generateTagLabel(tag);
   });
 
@@ -192,17 +197,17 @@ function generateNote(note){
   return html;
 }
 
-function addNoteListeners(){
-  $('button.delete-note').each(function(index, item){ //array of all delete buttons
+function addNoteListeners() {
+  $('button.delete-note').each(function(index, item) { //array of all delete buttons
 
-    $(item).on('click', function(event){
+    $(item).on('click', function(event) {
       if (confirm('Are you sure?')) {
         var id = $(item).data('id');
         $.ajax({
           url: '/notes/' + id,
           type: 'DELETE',
           success: function(result) {
-            if (currentTagId === 0){ //check if there is no currently selected tag
+            if (currentTagId === 0) { //check if there is no currently selected tag
               getAllNotes(); //then load all notes
             } else {
               getTagNotes(currentTagId); //otherwise load notes based on currently selected tag
@@ -216,11 +221,11 @@ function addNoteListeners(){
   addTagLabelListeners();
 }
 
-function addViewAllButton(){
-  if ( $('button#view-all').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
+function addViewAllButton() {
+  if ( $('button#view-all').length < 1) { //check if button doesn't exist - is array of buttons less than 1?
     $('div#tag-buttons').append('<button type="button" class="btn btn-info btn-sm tag-mod-btn" id="view-all">View All</button>');
 
-    $('button#view-all').on('click', function(event){
+    $('button#view-all').on('click', function(event) {
       getAllNotes();
       removeEditTagForm();
       removeTagButtons();
@@ -228,17 +233,17 @@ function addViewAllButton(){
   }
 }
 
-function addEditTagButton(){
-  if ( $('button#edit-tag').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
+function addEditTagButton() {
+  if ( $('button#edit-tag').length < 1) { //check if button doesn't exist - is array of buttons less than 1?
     $('div#tag-buttons').append('<button type="button" class="btn btn-secondary-outline btn-sm tag-mod-btn" id="edit-tag">Edit Tag</button>');
 
-    $('button#edit-tag').on('click', function(event){
-      if ( $('form#edit-tag-form').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
+    $('button#edit-tag').on('click', function(event) {
+      if ( $('form#edit-tag-form').length < 1) { //check if button doesn't exist - is array of buttons less than 1?
         $('div#tag-edit-div').append('<form id="edit-tag-form"></br><fieldset class="form-group"><div class="field"><input type="text" name="tag[name]" class="form-control" id="edit-tag-text-input" placeholder="Edit tag name"></div></fieldset><fieldset class="form-group"><div class="field"><button type="submit" class="btn btn-primary btn-sm">Submit</button></div></fieldset></form>');
       }
     });
 
-    $(document).on('submit','form#edit-tag-form',function(event){ //use this for dynamic content
+    $(document).on('submit','form#edit-tag-form',function(event) { //use this for dynamic content
       event.preventDefault(); //prevent form from submitting the default way and reloading page
       var tagName = $('#edit-tag-text-input').val();
 
@@ -261,16 +266,16 @@ function addEditTagButton(){
   }
 }
 
-function removeEditTagForm(){
+function removeEditTagForm() {
   $('form#edit-tag-form').remove();
 }
 
-function addDeleteTagButton(){
-  if ( $('button#delete-tag').length < 1){ //check if button doesn't exist - is array of buttons less than 1?
+function addDeleteTagButton() {
+  if ( $('button#delete-tag').length < 1) { //check if button doesn't exist - is array of buttons less than 1?
     $('div#tag-buttons').append('<button type="button" class="btn btn-secondary-outline btn-sm tag-mod-btn" id="delete-tag">Delete Tag</button>');
 
-    $('button#delete-tag').on('click', function(event){
-      if (confirm('Are you sure?')){
+    $('button#delete-tag').on('click', function(event) {
+      if (confirm('Are you sure?')) {
         removeEditTagForm();
 
         $.ajax({
@@ -287,7 +292,7 @@ function addDeleteTagButton(){
   }
 }
 
-function removeTagButtons(){
+function removeTagButtons() {
   currentTagId = 0; //set currently selected tag to none
   $('button#view-all').remove();
   $('button#edit-tag').remove();
