@@ -19,7 +19,7 @@ class TagsController < ApplicationController
     if @tag.save
       render json: @tag
     else
-      redirect_to root_path, alert: 'Tag creation failed.'
+      render json: { errors: @tag.errors.full_messages }, status: 422
     end
   end
 
@@ -27,7 +27,7 @@ class TagsController < ApplicationController
     if @tag.update(tag_params)
       render nothing: true #don't render or redirect since this will be called via ajax
     else
-      redirect_to root_path, alert: 'Tag update failed.'
+      render json: { errors: @tag.errors.full_messages }, status: 422
     end
   end
 
@@ -46,6 +46,7 @@ class TagsController < ApplicationController
   def authorize_ownership
     if @tag.user != current_user
       redirect_to root_path, alert: 'You do not have required permissions.'
+      return #guard clause
     end
   end
 

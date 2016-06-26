@@ -20,12 +20,12 @@ class NotesController < ApplicationController
     if @note.save
       render json: @note
     else
-      redirect_to root_path, alert: 'Note creation failed.'
+      render json: { errors: @note.errors.full_messages }, status: 422
     end
   end
 
   def edit
-      @user_tags = current_user.tags.order("name ASC")
+      @user_tags = current_user.tags.order("name ASC") #for collection checkboxes on form
   end
 
   def update
@@ -35,7 +35,7 @@ class NotesController < ApplicationController
        format.json { render json: @note }
      end
    else
-     redirect_to root_path, alert: 'Note update failed.'
+     render :edit, alert: 'Note update failed.'
    end
   end
 
@@ -45,7 +45,7 @@ class NotesController < ApplicationController
     if request.xhr? #checks if ajax request - checks header
       render nothing: true #don't redirect or render anything
     else
-      redirect_to(root_path) #else if initiating from note show page, redirect to home
+      redirect_to root_path, alert: 'Note deleted.' #else if initiating from note show page, redirect to home
     end
   end
 
@@ -59,6 +59,7 @@ class NotesController < ApplicationController
   def authorize_ownership
     if @note.user != current_user
       redirect_to root_path, alert: 'You do not have required permissions.'
+      return #guard clause
     end
   end
 
