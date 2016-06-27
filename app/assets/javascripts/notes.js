@@ -19,7 +19,8 @@ function getNote(id) {
 
 function loadNote(note) {
   var noteBody = $('#note-show-div');
-  noteBody.append('<h2>' + note.title + '</h2><br>');
+  noteBody.append('<h2>' + noteFormatter.titleCase(note.title) + '</h2>');
+  noteBody.append('<h4>' + noteFormatter.readableDate(note.created_at) + '</h4><br>');
   noteBody.append('<p>' + note.content + '</p><br>');
 
   noteBody.append('<p><strong>Tags:</strong>');
