@@ -18,7 +18,7 @@ $(document).ready(function() { //doesn't trigger using turbolinks - fixed by usi
 });
 
 function clearMessages() {
-  $('.alert').delay(3000).fadeOut(1000);
+  $('.alert').delay(2000).fadeOut(500);
 }
 
 function createMessage(text) {
@@ -46,6 +46,7 @@ function attachListeners() {
       posting.done(function(data) {
         $('form #tag_name').val(''); //clear form input
         loadTags();
+        createMessage('Tag created');
       });
 
       posting.fail(function(data) {
@@ -69,6 +70,7 @@ function attachListeners() {
         $('form #note_title').val(''); //clear form input
         $('form #note_content').val(''); //clear form input
         getAllNotes();
+        //createMessage('Note created');
       });
 
       posting.fail(function(data) {
@@ -231,7 +233,7 @@ function addNoteListeners() {
             } else {
               getTagNotes(currentTagId); //otherwise load notes based on currently selected tag
             }
-            createMessage("Note deleted.");
+            createMessage('Note deleted.');
           }
         });
       }
@@ -278,6 +280,7 @@ function addEditTagButton() {
             removeEditTagForm();
             loadTags();
             getTagNotes(currentTagId);
+            createMessage('Tag updated.');
           }
         });
       }
@@ -305,6 +308,7 @@ function addDeleteTagButton() {
             getAllNotes();
             loadTags();
             removeTagButtons();
+            createMessage('Tag deleted.');
           }
         });
       }
