@@ -7,13 +7,17 @@ body {
 	border-color: #d6d65c;
 }
 
-button.tag-btn, button.tag-mod-btn {
+button.tag-btn, button.tag-mod-btn, button.tag-btn-show {
 	margin: 4px;
 }
 
 .tag-label {
 	margin-right: 6px;
 	cursor: pointer;
+}
+
+.tag-label-show {
+	margin-right: 6px;
 }
 
 .date {

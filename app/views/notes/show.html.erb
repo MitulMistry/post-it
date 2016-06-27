@@ -5,16 +5,19 @@
       <div class="col-md-2"></div>
 
       <div class="col-md-8">
-        <h2><%= @note.title %></h2><br>
+        <div id="note-show-div">
+        </div>
+
+        <!-- <h2><%= @note.title %></h2><br>
         <p><%= @note.content %></p><br>
         <p><strong>Tags:</strong>
           <% @note.tags.each do |tag| %>
             <span class="label label-warning"><%= tag.name %></span>
           <% end %>
-        </p>
-        <div>
-          <%= link_to 'Edit', edit_note_path(@note), class: 'btn btn-primary btn-sm', role: 'button' %>
-          <%= link_to 'Delete', @note, :method => :delete, :data => {:confirm => "Are you sure?"}, class: "btn btn-primary btn-sm", role: 'button' %>
+        </p> -->
+        <div id="note-show-buttons">
+          <!-- <%= link_to 'Edit', edit_note_path(@note), class: 'btn btn-primary btn-sm', role: 'button' %>
+          <%= link_to 'Delete', @note, :method => :delete, :data => {:confirm => "Are you sure?"}, class: "btn btn-primary btn-sm", role: 'button' %> -->
         </div>
       </div>
 
