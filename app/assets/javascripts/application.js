@@ -18,4 +18,5 @@
 //= require formatter
 //= require validator
 //= require main
+//= require notes
 //= require turbolinks

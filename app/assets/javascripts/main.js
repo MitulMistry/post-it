@@ -11,6 +11,7 @@ var formatter = new Formatter(); //create formatter instance
 var validator = new Validator(); //create validator instance
 
 $(document).ready(function() { //doesn't trigger using turbolinks - fixed by using jquery-turbolinks gem
+  if ($("#home-index-page").length === 0) return; //breaks out of function if not home page, makes this page specific
   attachListeners();
   loadTags();
   getAllNotes();
