@@ -1,4 +1,5 @@
 var noteFormatter = new Formatter();
+var currentNote;
 
 $(document).ready(function() { //doesn't trigger using turbolinks - fixed by using jquery-turbolinks gem
   if ($("#note-show-page").length === 0) return; //breaks out of function if not show page, makes this page specific
@@ -13,18 +14,19 @@ function getId(){ //get id from path: site.com/notes/792
 
 function getNote(id) {
   $.getJSON('/notes/' + id).success(function(response) {
-    loadNote(response);
+    currentNote = new Note(response);
+    loadNote();
   });
 }
 
-function loadNote(note) {
+function loadNote() {
   var noteBody = $('#note-show-div');
-  noteBody.append('<h2>' + noteFormatter.titleCase(note.title) + '</h2>');
-  noteBody.append('<h4>' + noteFormatter.readableDate(note.created_at) + '</h4><br>');
-  noteBody.append('<p>' + note.content + '</p><br>');
+  noteBody.append('<h2>' + currentNote.capitalizedTitle() + '</h2>');
+  noteBody.append('<h4>' + currentNote.readableCreationDate() + '</h4><br>');
+  noteBody.append('<p>' + currentNote.content + '</p><br>');
 
   noteBody.append('<p><strong>Tags:</strong>');
-  var tags = note.tags;
+  var tags = currentNote.tags;
 
   for(var i = 0; i < tags.length; i++) {
     noteBody.append('<span class="label label-warning tag-label-show">' + tags[i].name + '</span>');
@@ -32,13 +34,13 @@ function loadNote(note) {
   noteBody.append('</p>');
 
   var noteButtons = $('#note-show-buttons');
-  noteButtons.append('<a class="btn btn-primary btn-sm tag-btn-show" role="button" href="/notes/' + note.id + '/edit">Edit</a>');
+  noteButtons.append('<a class="btn btn-primary btn-sm tag-btn-show" role="button" href="/notes/' + currentNote.id + '/edit">Edit</a>');
   noteButtons.append('<button type="button" class="btn btn-primary btn-sm tag-btn-show" id="note-show-delete">Delete</button>');
 
   $('button#note-show-delete').on('click', function(event) {
     if (confirm('Are you sure?')) {
       $.ajax({
-        url: '/notes/' + note.id,
+        url: '/notes/' + currentNote.id,
         type: 'DELETE',
         success: function(result) {
           window.location = '/'; //redirect to root

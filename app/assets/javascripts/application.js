@@ -17,6 +17,7 @@
 //= require bootstrap
 //= require formatter
 //= require validator
+//= require note
 //= require main
 //= require notes
 //= require turbolinks
