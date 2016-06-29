@@ -1,4 +1,4 @@
-var noteFormatter = new Formatter();
+//var noteFormatter = new Formatter();
 var currentNote;
 
 $(document).ready(function() { //doesn't trigger using turbolinks - fixed by using jquery-turbolinks gem

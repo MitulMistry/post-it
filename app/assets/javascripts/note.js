@@ -6,8 +6,7 @@ function Note(data) { //Note class
   this.created_at = data.created_at;
   this.updated_at = data.updated_at;
 }
-//{"id":789,"title":"Omnis quidem blanditiis in asperiores perspiciatis fugiat.","content":"Et nisi excepturi. Quam vel quisquam. Est error impedit tenetur consequatur illum dignissimos quis. Ea doloribus aut amet rerum. Ut velit odio.","created_at":"2016-05-30T16:04:44.957Z","updated_at":"2016-05-30T16:04:44.957Z","tags":[{"id":80,"name":"id22"},{"id":101,"name":"omnis2"}]}
-
+//response data-- {"id":789,"title":"Omnis quidem blanditiis in asperiores perspiciatis fugiat.","content":"Et nisi excepturi. Quam vel quisquam. Est error impedit tenetur consequatur illum dignissimos quis. Ea doloribus aut amet rerum. Ut velit odio.","created_at":"2016-05-30T16:04:44.957Z","updated_at":"2016-05-30T16:04:44.957Z","tags":[{"id":80,"name":"id22"},{"id":101,"name":"omnis2"}]}
 
 Note.prototype.readableCreationDate = function() { //dateTime = 2016-05-26T16:24:19.457Z
   var date = this.created_at.slice(0, 10).split('-'); //get first 10 characters, split into array based on dashes
