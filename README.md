@@ -1,6 +1,5 @@
 # Post-It
 
-## Intro
 Post-It is a simple note taking application built using a [jQuery][jquery] front end and a [Rails][rails] back end. The front end leverages AJAX to handle user requests spontaneously, communicating to a serialized JSON back end.
 
 ![screenshot](readme_post_it.jpg)
