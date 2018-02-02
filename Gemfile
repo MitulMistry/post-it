@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.2', '>= 4.2.7.1'
+gem 'rails', '~> 4.2', '>= 4.2.10'
 # Use PostgreSQL as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
@@ -38,8 +38,8 @@ source 'https://rails-assets.org' do #goes along with bootstrap ruby gem
   gem 'rails-assets-tether', '>= 1.1.0'
 end
 
-gem 'devise'
-gem 'active_model_serializers'
+gem 'devise', '~> 4.4', '>= 4.4.1'
+gem 'active_model_serializers', '~> 0.10.7'
 #gem 'kaminari'
 #gem 'airbrake'
 gem 'faker'
