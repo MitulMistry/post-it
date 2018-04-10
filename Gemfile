@@ -38,7 +38,7 @@ source 'https://rails-assets.org' do #goes along with bootstrap ruby gem
   gem 'rails-assets-tether', '>= 1.1.0'
 end
 
-gem 'devise', '~> 4.4', '>= 4.4.1'
+gem 'devise', '~> 4.4', '>= 4.4.3'
 gem 'active_model_serializers', '~> 0.10.7'
 #gem 'kaminari'
 #gem 'airbrake'
@@ -55,27 +55,27 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
-  gem "rspec-rails"
-  gem "capybara"
-  #gem "selenium-webdriver"
-  #gem "better_errors"
-  #gem "sprockets_better_errors"
-  #gem "binding_of_caller"
-  #gem "factory_girl_rails"
-  #gem "simplecov"
-  #gem "database_cleaner"
-  gem "pry"
-  #gem "rack_session_access"
+  gem 'rspec-rails'
+  gem 'capybara'
+  #gem 'selenium-webdriver'
+  #gem 'better_errors'
+  #gem 'sprockets_better_errors'
+  #gem 'binding_of_caller'
+  #gem 'factory_girl_rails'
+  #gem 'simplecov'
+  #gem 'database_cleaner'
+  gem 'pry'
+  #gem 'rack_session_access'
 
-  #gem "launchy"
-  #gem "capybara-webkit"
-  #gem "guard-rspec", require: false
-  #gem "thin"
+  #gem 'launchy'
+  #gem 'capybara-webkit'
+  #gem 'guard-rspec', require: false
+  #gem 'thin'
 
   #gem 'dotenv-rails'
 end
 
 group :production do
-  #gem "google-analytics-rails"
-  gem "rails_12factor"
+  #gem 'google-analytics-rails'
+  gem 'rails_12factor'
 end
