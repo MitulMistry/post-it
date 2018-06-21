@@ -115,7 +115,7 @@ GEM
     nokogiri (1.8.3)
       mini_portile2 (~> 2.3.0)
     orm_adapter (0.5.0)
-    pg (1.0.0)
+    pg (0.21.0)
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -235,7 +235,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   jquery-turbolinks
-  pg (~> 1.0)
+  pg (~> 0.21.0)
   pry
   rails (~> 4.2, >= 4.2.10)
   rails-assets-tether (>= 1.1.0)!
