@@ -30,7 +30,7 @@ gem 'jbuilder', '~> 2.7'
 # gem 'image_processing', '~> 1.2'
 
 #gem 'bootstrap-sass'
-gem 'bootstrap', '4.0.0.alpha3' #bootstrap 4
+gem 'bootstrap', '4.3.1' #bootstrap 4
 
 source 'https://rails-assets.org' do #goes along with bootstrap ruby gem
   gem 'rails-assets-tether', '>= 1.1.0'
