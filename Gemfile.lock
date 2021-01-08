@@ -259,6 +259,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86_64-linux
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.12)

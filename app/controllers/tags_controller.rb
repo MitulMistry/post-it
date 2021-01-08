@@ -25,7 +25,7 @@ class TagsController < ApplicationController
 
   def update
     if @tag.update(tag_params)
-      render nothing: true #don't render or redirect since this will be called via ajax
+      head :ok #don't render or redirect since this will be called via ajax
     else
       render json: { errors: @tag.errors.full_messages }, status: 422
     end
@@ -33,7 +33,7 @@ class TagsController < ApplicationController
 
   def destroy
     @tag.destroy
-    render nothing: true #don't render or redirect since this will be called via ajax
+    head :ok #don't render or redirect since this will be called via ajax
   end
 
   #--------------------
