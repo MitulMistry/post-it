@@ -43,7 +43,7 @@ class NotesController < ApplicationController
     @note.destroy
 
     if request.xhr? #checks if ajax request - checks header
-      render nothing: true #don't redirect or render anything
+      head :ok #don't redirect or render anything
     else
       redirect_to root_path, alert: 'Note deleted.' #else if initiating from note show page, redirect to home
     end
