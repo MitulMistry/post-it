@@ -11,14 +11,10 @@ gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
-
-gem 'sprockets', '~> 4'
-gem 'sprockets-rails', :require => 'sprockets/railtie'
-
-# Use jquery as the JavaScript library
-gem 'jquery-rails', '~> 4.4'
+# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
+gem 'webpacker', '~> 5.2', '>= 5.2.1' # Use Webpack to process JS and Yarn to manage front end dependencies
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks', '~> 5'
+# gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
@@ -28,9 +24,6 @@ gem 'jbuilder', '~> 2.7'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
-
-#gem 'bootstrap-sass'
-gem 'bootstrap', '~> 4.5', '>= 4.5.3'
 
 gem 'devise', '~> 4.7', '>= 4.7.3'
 gem 'active_model_serializers', '~> 0.10.12'

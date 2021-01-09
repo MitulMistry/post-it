@@ -7,8 +7,8 @@ totalPages;
 
 var NOTES_PER_PAGE = 10;
 
-var formatter = new Formatter(); //create formatter instance
-var validator = new Validator(); //create validator instance
+// var formatter = new Formatter(); //create formatter instance
+// var validator = new Validator(); //create validator instance
 
 $(document).on('turbolinks:load', function() {
   if ($('#home-index-page').length === 0) return; //breaks out of function if not home page, makes this page specific
