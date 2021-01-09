@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
-//= require tether
+//= require popper
 //= require bootstrap
 //= require formatter
 //= require validator

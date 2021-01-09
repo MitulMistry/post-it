@@ -31,7 +31,8 @@
       <div class="col-md-10">
         <div class="card-columns" id="notes">
 
-          <div class="card card-block">
+          <div class="card">
+            <div class="card-body">
             <%= form_for(@note) do |f| %>
               <h4>New note:</h4>
               <fieldset class="form-group">
@@ -54,6 +55,7 @@
                 </div>
               </fieldset>
             <% end %>
+            </div>
           </div>
 
         </div>

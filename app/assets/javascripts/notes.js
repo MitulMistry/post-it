@@ -29,7 +29,7 @@ function loadNote() {
   var tags = currentNote.tags;
 
   for(var i = 0; i < tags.length; i++) {
-    noteBody.append('<span class="label label-warning tag-label-show">' + tags[i].name + '</span>');
+    noteBody.append('<span class="badge bg-warning text-dark tag-badge-show">' + tags[i].name + '</span>');
   }
   noteBody.append('</p>');
 

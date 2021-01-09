@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1.0'
+gem 'rails', '~> 6.1', '>= 6.1.1'
 # Use PostgreSQL as the database for Active Record
 gem 'pg', '~> 1.1'
 # Use Puma as the app server
@@ -30,11 +30,7 @@ gem 'jbuilder', '~> 2.7'
 # gem 'image_processing', '~> 1.2'
 
 #gem 'bootstrap-sass'
-gem 'bootstrap', '4.0.0.alpha3' #bootstrap 4
-
-source 'https://rails-assets.org' do #goes along with bootstrap ruby gem
-  gem 'rails-assets-tether', '>= 1.1.0'
-end
+gem 'bootstrap', '~> 4.5', '>= 4.5.3'
 
 gem 'devise', '~> 4.7', '>= 4.7.3'
 gem 'active_model_serializers', '~> 0.10.12'
