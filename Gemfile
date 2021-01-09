@@ -35,7 +35,6 @@ gem 'bootstrap', '~> 4.5', '>= 4.5.3'
 gem 'devise', '~> 4.7', '>= 4.7.3'
 gem 'active_model_serializers', '~> 0.10.12'
 gem 'faker', '~> 2.15', '>= 2.15.1'
-gem 'jquery-turbolinks', '~> 2.1' #fix issues with javascript executing through turbolinks
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
