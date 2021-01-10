@@ -1,7 +1,8 @@
+import Note from './note';
 //var noteFormatter = new Formatter();
 var currentNote;
 
-$(document).on('turbolinks:load', function() {
+$(document).on('turbolinks:load', function() { // equivalent of $(document).ready()
   if ($('#note-show-page').length === 0) return; //breaks out of function if not show page, makes this page specific
   var id = getId();
   getNote(id);
@@ -13,7 +14,7 @@ function getId(){ //get id from path: site.com/notes/792
 }
 
 function getNote(id) {
-  $.getJSON('/notes/' + id).success(function(response) {
+  $.getJSON('/notes/' + id).done(function(response) {
     currentNote = new Note(response);
     loadNote();
   });

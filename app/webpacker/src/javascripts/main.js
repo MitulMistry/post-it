@@ -1,16 +1,17 @@
-'use strict';
+import Formatter from './formatter';
+import Validator from './validator';
 
 var currentTagId = 0,
 totalNotes,
 currentPage = 0,
 totalPages;
 
-var NOTES_PER_PAGE = 10;
+const NOTES_PER_PAGE = 10;
 
-// var formatter = new Formatter(); //create formatter instance
-// var validator = new Validator(); //create validator instance
+const formatter = new Formatter(); //create formatter instance
+const validator = new Validator(); //create validator instance
 
-$(document).on('turbolinks:load', function() {
+$(document).on('turbolinks:load', function() { // equivalent of $(document).ready()
   if ($('#home-index-page').length === 0) return; //breaks out of function if not home page, makes this page specific
   attachListeners();
   loadTags();
@@ -83,7 +84,7 @@ function attachListeners() {
 }
 
 function loadTags() {
-  $.getJSON('/tags').success(function(response) {
+  $.getJSON('/tags').done(function(response) {
     var tags = response;
 
     $('div#tags').html(''); //clear tags
@@ -129,7 +130,7 @@ function attachTagListeners(item) {
 }
 
 function getAllNotes() {
-  $.getJSON('/notes').success(function(response) {
+  $.getJSON('/notes').done(function(response) {
     totalNotes = response;
     totalPages = Math.ceil(totalNotes.length / NOTES_PER_PAGE); //calculates total number of pages needed, rounds up
     paginateNotes();
@@ -137,7 +138,7 @@ function getAllNotes() {
 }
 
 function getTagNotes(tagId) {
-  $.getJSON('/tags/' + tagId).success(function(response) {
+  $.getJSON('/tags/' + tagId).done(function(response) {
     totalNotes = response;
     totalPages = Math.ceil(totalNotes.length / NOTES_PER_PAGE); //calculates total number of pages needed, rounds up
     paginateNotes();
